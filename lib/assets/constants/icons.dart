@@ -1,8 +1,8 @@
 const _global = 'assets/icons/global/';
 const _tasks = 'assets/icons/tasks/';
 const _onboard = 'assets/icons/onboard/';
-const _all = 'assets/icons/all';
-const _upcoming = 'assets/icons/upcoming';
+const _all = 'assets/icons/all/';
+const _upcoming = 'assets/icons/upcoming/';
 
 sealed class AppIcons {
   // ------------------  Global Folder  ----------------------- //
@@ -15,7 +15,7 @@ sealed class AppIcons {
   static const logo = '${_global}logo.svg';
   static const apple = '${_global}apple.svg';
   static const eyeOff = '${_global}eye_off.svg';
-  static const eyeOn = '${_global}eye_on.svg';
+  static const eyeOn = '${_global}eye_ogymn.svg';
   static const facebook = '${_global}facebook.svg';
   static const google = '${_global}google.svg';
 

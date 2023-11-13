@@ -37,6 +37,8 @@ flutter:
     - assets/icons/global/
     - assets/icons/onboard/
     - assets/icons/tasks/
+    - assets/icons/all/
+    - assets/icons/upcoming/
     
     - assets/images/
 

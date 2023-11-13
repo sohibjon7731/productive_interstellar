@@ -131,191 +131,207 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Builder(builder: (context) {
-        return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            if (FocusScope.of(context).hasFocus) {
-              FocusScope.of(context).unfocus();
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  const Gap(40),
-                  Text(
-                    "Create new password",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "Barlow",
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -0.165,
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Builder(builder: (context) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              if (FocusScope.of(context).hasFocus) {
+                FocusScope.of(context).unfocus();
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    /* const Gap(40), */
+                    Container(
+                      height: 29,
+                      width: double.maxFinite,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(16),
+                      child: Text(
+                        "Create new password",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "Barlow",
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.165,
+                        ),
+                      ),
                     ),
-                  ),
-                  Gap(36),
-                  Image.asset("assets/images/girl.png"),
-                  const Gap(48),
-                  TextFormField(
-                    style: textFieldContentStyle,
-                    cursorColor: cursorColor,
-                    focusNode: passwordFocusNode2,
-                    controller: passwordTextEditingController2,
-                    decoration: decoration(
-                      hintText: 'Enter new password',
-                      /* suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isObscure = !isObscure;
-                          });
-                        },
-                        child: Padding(
+                    Gap(20),
+                    Container(
+                      width: 130,
+                      height: 130,
+                      child: Image.asset("assets/images/girl.png"),
+                    ),
+                    const Gap(48),
+                    TextFormField(
+                      style: textFieldContentStyle,
+                      cursorColor: cursorColor,
+                      focusNode: passwordFocusNode2,
+                      controller: passwordTextEditingController2,
+                      decoration: decoration(
+                        hintText: 'Enter new password',
+                        /* suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isObscure = !isObscure;
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 13.5),
+                            child: SvgPicture.asset(
+                              isObscure ? AppIcons.eyeOff : AppIcons.eyeOn,
+                            ),
+                          ),
+                        ), */
+                      ),
+                      onEditingComplete: () {
+                        // TODO: Login
+                      },
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: isObscure,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Iltimos, parolingizni kiriting!';
+                        } else if (value.length < 7) {
+                          return 'Parol eng kamida 8ta belgidan tashkil topgan bo\'lishi kerak';
+                        }
+    
+                        return null;
+                      },
+                    ),
+                    const Gap(16),
+                    TextFormField(
+                      style: textFieldContentStyle,
+                      cursorColor: cursorColor,
+                      focusNode: passwordFocusNode,
+                      controller: passwordTextEditingController,
+                      decoration: decoration(
+                        hintText: 'Confirm password',
+                        suffixIcon: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 13.5),
                           child: SvgPicture.asset(
-                            isObscure ? AppIcons.eyeOff : AppIcons.eyeOn,
+                            (isEqual) ? AppIcons.ticker_green : AppIcons.ticker,
                           ),
                         ),
-                      ), */
-                    ),
-                    onEditingComplete: () {
-                      // TODO: Login
-                    },
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: isObscure,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Iltimos, parolingizni kiriting!';
-                      } else if (value.length < 7) {
-                        return 'Parol eng kamida 8ta belgidan tashkil topgan bo\'lishi kerak';
-                      }
-
-                      return null;
-                    },
-                  ),
-                  const Gap(16),
-                  TextFormField(
-                    style: textFieldContentStyle,
-                    cursorColor: cursorColor,
-                    focusNode: passwordFocusNode,
-                    controller: passwordTextEditingController,
-                    decoration: decoration(
-                      hintText: 'Confirm password',
-                      
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 13.5),
-                        child: SvgPicture.asset(
-                          (isEqual) ? AppIcons.ticker_green : AppIcons.ticker,
-                        ),
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          isEqual =
+                              (passwordTextEditingController2.text == value);
+                        });
+                      },
+                      onEditingComplete: () {
+                        // TODO: Login
+                      },
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: isObscure,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Iltimos, parolingizni kiriting!';
+                        } else if (value.length < 7) {
+                          return 'Parol eng kamida 8ta belgidan tashkil topgan bo\'lishi kerak';
+                        } else if (value != passwordTextEditingController.text) {
+                          return 'Parolingiz to\'g\'ri kelmadi!';
+                        } /* else if(isEqual==false){
+                          return 
+                        } */
+    
+                        return null;
+                      },
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        isEqual =
-                            (passwordTextEditingController2.text == value);
-                      });
-                    },
-                    onEditingComplete: () {
-                      // TODO: Login
-                    },
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: isObscure,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Iltimos, parolingizni kiriting!';
-                      } else if (value.length < 7) {
-                        return 'Parol eng kamida 8ta belgidan tashkil topgan bo\'lishi kerak';
-                      } else if (value != passwordTextEditingController.text) {
-                        
-                        return 'Parolingiz to\'g\'ri kelmadi!';
-                      } /* else if(isEqual==false){
-                        return 
-                      } */
-
-                      return null;
-                    },
-                  ),
-                  /* const Gap(12),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: const Text(
-                        'Forgot password?',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: textButtonColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Gap(16), */
-                  const Gap(266),
-                  WButton(
-                    isDisabled: !isLoginDataValid,
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
+                    /* const Gap(12),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: const Text(
+                          'Forgot password?',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: textButtonColor,
                           ),
-                        );
-                        /* authUser.user = AuthenticatedUserEntity(
-                          email: mailTextEditingController.text,
-                          password: passwordTextEditingController.text,
-                        );
-                        Navigator.of(context).pushNamed('/home'); */
-                      }
-                    },
-                    text: 'Save',
-                  ),
-
-                  /* const Gap(56),
-                  const Row(
-                    children: [
-                      Expanded(child: WDivider()),
-                      Gap(6),
-                      Text(
-                        'OR',
-                        style: TextStyle(
-                          color: white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Gap(5),
-                      Expanded(child: WDivider()),
-                    ],
-                  ),
-                  const Gap(24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.facebook),
-                      const Gap(32),
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.google),
-                      const Gap(32),
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.apple),
-                    ],
-                  ), */
-                ],
+                    ),
+                    const Gap(16), */
+                    const Gap(261),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 24,
+                left: 16,
+                right: 16),
+                      child: WButton(
+                        isDisabled: !isLoginDataValid,
+                        onTap: () {
+                          if (formKey.currentState!.validate()) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                            /* authUser.user = AuthenticatedUserEntity(
+                              email: mailTextEditingController.text,
+                              password: passwordTextEditingController.text,
+                            );
+                            Navigator.of(context).pushNamed('/home'); */
+                          }
+                        },
+                        text: 'Save',
+                      ),
+                    ),
+    
+                    /* const Gap(56),
+                    const Row(
+                      children: [
+                        Expanded(child: WDivider()),
+                        Gap(6),
+                        Text(
+                          'OR',
+                          style: TextStyle(
+                            color: white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Gap(5),
+                        Expanded(child: WDivider()),
+                      ],
+                    ),
+                    const Gap(24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SocialMediaLoginButton(
+                            onTap: () {}, icon: AppIcons.facebook),
+                        const Gap(32),
+                        SocialMediaLoginButton(
+                            onTap: () {}, icon: AppIcons.google),
+                        const Gap(32),
+                        SocialMediaLoginButton(
+                            onTap: () {}, icon: AppIcons.apple),
+                      ],
+                    ), */
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+        
+      ),
     );
   }
 }

@@ -2,30 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:productive/core/widgets/w_button.dart';
-import 'package:productive/features/authentication/domain/entity/authenticated_user.dart';
-import 'package:productive/features/authentication/presentation/pages/forgot_password/forgot_password.dart';
-import 'package:productive/features/authentication/presentation/sign_up.dart';
+import 'package:productive/features/authentication/presentation/login_screen.dart';
+
+
 import 'package:productive/features/authentication/presentation/widgets/social_media_login_button.dart';
 import 'package:productive/features/home/home.dart';
-import 'package:productive/main.dart';
 
 import '../../../assets/constants/colors.dart';
 import '../../../assets/constants/icons.dart';
 import '../../../core/widgets/w_divider.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(
-        builder: (_) => const LoginScreen(),
+        builder: (_) => const SignUpScreen(),
       );
 
-  const LoginScreen({super.key});
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  bool isLoginDataValid = false;
+class _SignUpScreenState extends State<SignUpScreen> {
+double height = 60;
+double verticalMargin = 20;
+double horizontalMargin = 20;
+
+
+  bool isSignUpDataValid = false;
   final mailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
 
@@ -39,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   final formKey = GlobalKey<FormState>();
+
 
   bool isObscure = true;
 
@@ -84,41 +89,44 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-  @override
-  void initState() {
-    mailTextEditingController.addListener(() {
-      if (formKey.currentState!.validate()) {
-        if (!isLoginDataValid) {
-          setState(() {
-            isLoginDataValid = true;
-          });
-        }
-      } else {
-        if (isLoginDataValid) {
-          setState(() {
-            isLoginDataValid = false;
-          });
-        }
-      }
-    });
 
-    passwordTextEditingController.addListener(() {
-      if (formKey.currentState!.validate()) {
-        if (!isLoginDataValid) {
-          setState(() {
-            isLoginDataValid = true;
-          });
-        }
-      } else {
-        if (isLoginDataValid) {
-          setState(() {
-            isLoginDataValid = false;
-          });
-        }
+ @override
+  void initState() {
+  mailTextEditingController.addListener(() {
+    if (formKey.currentState!.validate()) {
+      if (!isSignUpDataValid) {
+        setState(() {
+          isSignUpDataValid = true;
+        });
       }
-    });
+    }else{
+      if (!isSignUpDataValid) {
+        setState(() {
+          isSignUpDataValid = false;
+        });
+      }
+    }
+  });
+   
+     passwordTextEditingController.addListener(() {
+    if (formKey.currentState!.validate()) {
+      if (!isSignUpDataValid) {
+        setState(() {
+          isSignUpDataValid = true;
+        });
+      }
+    }else{
+      if (!isSignUpDataValid) {
+        setState(() {
+          isSignUpDataValid = false;
+        });
+      }
+    }
+  });
+
     super.initState();
   }
+
 
   @override
   void dispose() {
@@ -127,16 +135,23 @@ class _LoginScreenState extends State<LoginScreen> {
     mailFocusNode.dispose();
     passwordFocusNode.dispose();
     super.dispose();
-  }
-
-  @override
+  }@override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Builder(builder: (context) {
         return GestureDetector(
+          
           behavior: HitTestBehavior.opaque,
           onTap: () {
+            //  onTapDown: (_) {
+        verticalMargin = 30;
+        height = 40;
+        horizontalMargin = 40;
+        setState(() {});
+        print("OnTapDowN BIRINCHI CHIQADI ");
+      // };
+
             if (FocusScope.of(context).hasFocus) {
               FocusScope.of(context).unfocus();
             }
@@ -167,9 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                           .hasMatch(value)) {
                         return 'Iltimos, yaroqli mail manzilini kiriting';
-                      }
-
-                      return null;
+                      }return null;
                     },
                   ),
                   const Gap(16),
@@ -196,6 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     onEditingComplete: () {
+                      print('salom');
                       // TODO: Login
                     },
                     textInputAction: TextInputAction.done,
@@ -204,11 +218,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Iltimos, parolingizni kiriting!';
-                      } else if (value.length < 7) {
+                      } else if (value.length < 8) {
                         return 'Parol eng kamida 8ta belgidan tashkil topgan bo\'lishi kerak';
                       }
-
-                      return null;
                     },
                   ),
                   const Gap(12),
@@ -216,15 +228,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ForgotPasswordPage(),
-                          ),
-                        );
+                        print('forgot password bosildi');
                       },
                       child: const Text(
-                        'Forgot password?',
+                        '',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -235,21 +242,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const Gap(16),
                   WButton(
-                    isDisabled: !isLoginDataValid,
+                    isDisabled: !isSignUpDataValid,
                     onTap: () {
+                      print('hello');
                       if (formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
-                        /* authUser.user = AuthenticatedUserEntity(
-                          email: mailTextEditingController.text,
-                          password: passwordTextEditingController.text,
-                        );
-                        Navigator.of(context).pushNamed('/home'); */
+                        Navigator.pop(context, MaterialPageRoute(builder: (context) => HomeScreen(),),);print("We have a valid data");
                       }
                     },
-                    text: 'Login',
+                    text: 'Sign up',
                   ),
                   const Gap(56),
                   const Row(
@@ -282,15 +282,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: () {}, icon: AppIcons.apple),
                     ],
                   ),
-                  Gap(54),
-                               Padding(
+                Gap(54),
+
+                 Padding(
                       padding: const EdgeInsets.only(top: 33.0, bottom: 39),
                       child: Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Don’t have an account ? ",
+                              "Don’t have an account?",
                               style: TextStyle(color: Colors.white),
                             ),
                             TextButton(
@@ -299,16 +300,41 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              SignUpScreen()));
+                                              LoginScreen()));
                                 },
-                                child: Text("Sign up",
+                                child: Text("Login",
                               style: TextStyle(color: cursorColor),
+
                                 )),
                           ],
                         ),
                       ),
                     ),
+                
+         
+
+                // const Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               Text(
+                //                 "Don’t have an account ? ",
+                //                 textAlign: TextAlign.center,
+                               
+
+                //                 style: TextStyle(fontWeight: FontWeight.w500,),
+                //               ),
+                //               Padding(padding: EdgeInsets.only(right: 10.0),),
+                //               Text(
+                //                 "Login",
+                                
+                //                 textAlign: TextAlign.center,
+                //                 style: TextStyle(fontWeight: FontWeight.bold,color: cursorColor),
+                //               )
+                //             ],
+                //           ),
+                
                 ],
+
               ),
             ),
           ),
