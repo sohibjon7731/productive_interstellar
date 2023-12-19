@@ -15,9 +15,12 @@ sealed class AppIcons {
   static const logo = '${_global}logo.svg';
   static const apple = '${_global}apple.svg';
   static const eyeOff = '${_global}eye_off.svg';
-  static const eyeOn = '${_global}eye_ogymn.svg';
+  static const eyeOn = '${_global}eye_on.svg';
   static const facebook = '${_global}facebook.svg';
   static const google = '${_global}google.svg';
+  static const location = '${_global}location.svg';
+  static const addNotification = '${_global}notification.svg';
+
 
   // ------------------  Tasks Folder  ----------------------- //
   static const hamburger = '${_tasks}hamburger.svg';
@@ -38,6 +41,15 @@ sealed class AppIcons {
   static const puls_add = '${_tasks}puls_add.svg';
   static const sound = '${_tasks}sound.svg';
   static const delet_icon = '${_tasks}delet_icon.svg';
+  static const money = '${_tasks}money.svg';
+  static const tasks_solid = '${_tasks}tasks_solid.svg';
+  static const tasks_star = '${_tasks}tasks_star.svg';
+  static const close_create = '${_tasks}close_create.svg';
+  static const arrow = '${_tasks}arrow.svg';
+  static const exit2 = '${_tasks}exit2.svg';
+  static const check = '${_tasks}check.svg';
+  static const check_on = '${_tasks}check_on.svg';
+
 
   // ------------------  OnBoard Folder  ----------------------- //
   static const window2 = '${_onboard}window2.svg';

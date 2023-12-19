@@ -27,7 +27,7 @@ class _TabNavigatorState extends State<TabNavigator>
     switch (widget.tabItem) {
       case NavItemEnum.tasks:
         return {
-          TabNavigatorRoutes.root: (context) => const TaskScreen(),
+          TabNavigatorRoutes.root: (context) => TaskScreen(),
         };
       case NavItemEnum.expenses:
         return {

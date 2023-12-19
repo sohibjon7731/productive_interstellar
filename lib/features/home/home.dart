@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 import 'package:productive/features/home/navbar.dart';
+import 'package:productive/repository/create_task.dart';
 
 import '../../assets/constants/colors.dart';
 import '../../assets/constants/icons.dart';
@@ -126,7 +129,179 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               child: TabBar(
                 enableFeedback: true,
-                onTap: (index) {},
+                onTap: (index) {
+                  if (index == 2) {
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: appBarColor.withOpacity(0.4),
+                        builder: (BuildContext context) {
+                          return SafeArea(
+                            child: FractionallySizedBox(
+                              heightFactor: 1,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  /* mainAxisSize: MainAxisSize.min, */
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundColor: cursorColor,
+                                                  child: SvgPicture.asset(
+                                                      AppIcons.money),
+                                                ),
+                                                Gap(8),
+                                                Text(
+                                                  "Income",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: onPrimaryColor,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundColor: cursorColor,
+                                                  child: SvgPicture.asset(
+                                                      AppIcons.expense),
+                                                ),
+                                                Gap(8),
+                                                Text(
+                                                  "Expense",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: onPrimaryColor,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const CreateTaskScreen(),
+                                                  ),
+                                                );
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  CircleAvatar(
+                                                    backgroundColor:
+                                                        cursorColor,
+                                                    child: SvgPicture.asset(
+                                                        AppIcons.tasks_solid),
+                                                  ),
+                                                  Gap(8),
+                                                  Text(
+                                                    "Tasks",
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: onPrimaryColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        const Gap(61),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundColor: cursorColor,
+                                                  child: SvgPicture.asset(
+                                                      AppIcons.note),
+                                                ),
+                                                Gap(8),
+                                                Text(
+                                                  "Notes",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: onPrimaryColor,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundColor: cursorColor
+                                                      .withOpacity(0.0),
+                                                ),
+                                                Gap(8),
+                                                Text(
+                                                  "",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: onPrimaryColor,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundColor: cursorColor,
+                                                  child: SvgPicture.asset(
+                                                      AppIcons.tasks_star),
+                                                ),
+                                                Gap(8),
+                                                Text(
+                                                  "Event",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: onPrimaryColor,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: SvgPicture.asset(
+                                              AppIcons.close_create),
+                                        ),
+                                      ],
+                                    ),
+                                    const Gap(28),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                  }
+                },
                 indicator: const BoxDecoration(),
                 controller: _controller,
                 labelPadding: EdgeInsets.zero,

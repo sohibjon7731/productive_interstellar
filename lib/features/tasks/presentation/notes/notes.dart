@@ -1,103 +1,168 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
-import 'package:productive/assets/constants/icons.dart';
-import 'package:productive/features/tasks/presentation/notes/note.dart';
-import 'package:productive/features/tasks/presentation/notes/note_list.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:productive/assets/constants/colors.dart';
+import 'package:productive/features/tasks/presentation/notes/list_item.dart';
 
-class NotesPage extends StatelessWidget {
-    NotesPage({super.key});
+class NotesPage extends StatefulWidget {
+  const NotesPage({Key? key}) : super(key: key);
 
-  final nodesList = note.noteList();
+  @override
+  State<NotesPage> createState() => _NotesPageState();
+}
+
+class _NotesPageState extends State<NotesPage> {
+  List<String> titles = [
+    "Commitment resource lecture",
+    "Duas",
+    "Commitment resource lecture",
+    "Commitment resource lecture",
+    "Duas",
+  ];
+  List<String> desc = [
+    "We explained the definition of commitment and it..",
+    "Allahuma aeni ealaa dikrika wa shukrika wa husn e..",
+    "We explained the definition of commitmen..",
+    "We explained the definition of commitment and it..",
+    "Allahuma aeni ealaa dikrika wa shukrika wa husn e..",
+  ];
+  List<bool> audio = [false, false, true, false, false];
+  List<String?> images = [null, null, "assets/images/node_picture.png", null, null];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notes"),
+        elevation: 0,
         centerTitle: true,
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 20,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        title: const Text(
+          'Notes',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: white,
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Books',style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey),
-                textAlign: TextAlign.start,
+            const Text(
+              "Books",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: scaffoldBackgroundColor,
               ),
             ),
-            Gap(16),
-            books(),
-            Expanded(
-              child:ListView(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 50, bottom: 20),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Quick Notes",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey),
-                        ),
-                        Gap(254),
-                        SvgPicture.asset(AppIcons.puls_add),
-                      ],
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildBookColumn(
+                  "assets/icons/tasks/green_book.svg",
+                  "Password",
+                ),
+                _buildBookColumn(
+                  "assets/icons/tasks/red_book.svg",
+                  "Memories",
+                ),
+                Column(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/tasks/add_book.svg",
+                      height: 91,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(top :16.0),
+                    child: Text(
+                      "Quick Notes",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
-                  for ( note notex in nodesList)
-                  NotesText( notes: notex,),
-                ],
-              ),
-            )
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top:16.0),
+                  child: Container(
+                  
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.add),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            _buildNotesList(),
+            const SizedBox(height: 100),
           ],
         ),
       ),
     );
-
-
   }
 
-  void _onDismissed() {}
-
-  Widget books() {
-    return Container(
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                SvgPicture.asset(AppIcons.green_book),
-                Gap(8),
-                Text('Passwords'),
-              ],
-            ),
-            Column(
-              children: [
-                SvgPicture.asset(AppIcons.red_book),
-                Gap(8),
-                Text('Memories'),
-              ],
-            ),
-            Column(
-              children: [
-                SvgPicture.asset(AppIcons.add_book),
-              ],
-            ),
-          ],
+  Column _buildBookColumn(String iconPath, String label) {
+    return Column(
+      children: [
+        SvgPicture.asset(
+          iconPath,
+          height: 91,
         ),
-      ),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNotesList() {
+    return ListView.builder(
+      padding: const EdgeInsets.only(bottom: 24),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: titles.length,
+      itemBuilder: (context, index) {
+        return ListItem(
+          title: titles[index],
+          image: images[index],
+          desc: desc[index],
+          date: "15 November",
+          isAudio: audio[index],
+          onDelete: () {
+            setState(() {
+              titles.removeAt(index);
+              desc.removeAt(index);
+              images.removeAt(index);
+              audio.removeAt(index);
+            });
+          },
+        );
+      },
     );
   }
 }

@@ -246,7 +246,7 @@ double horizontalMargin = 20;
                     onTap: () {
                       print('hello');
                       if (formKey.currentState!.validate()) {
-                        Navigator.pop(context, MaterialPageRoute(builder: (context) => HomeScreen(),),);print("We have a valid data");
+                        Navigator.pop(context, MaterialPageRoute(builder: (context) =>const  LoginScreen(),),);
                       }
                     },
                     text: 'Sign up',
@@ -282,10 +282,10 @@ double horizontalMargin = 20;
                           onTap: () {}, icon: AppIcons.apple),
                     ],
                   ),
-                Gap(54),
+                Gap(110),
 
                  Padding(
-                      padding: const EdgeInsets.only(top: 33.0, bottom: 39),
+                      padding: const EdgeInsets.only(top: 33.0, bottom: 0),
                       child: Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

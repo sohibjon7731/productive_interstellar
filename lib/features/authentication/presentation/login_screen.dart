@@ -15,7 +15,7 @@ import '../../../core/widgets/w_divider.dart';
 
 class LoginScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(
-        builder: (_) => const LoginScreen(),
+        builder: (_) =>  LoginScreen(),
       );
 
   const LoginScreen({super.key});
@@ -25,7 +25,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isLoginDataValid = false;
+  bool isDataValid = false;
   final mailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
 
@@ -88,15 +88,15 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     mailTextEditingController.addListener(() {
       if (formKey.currentState!.validate()) {
-        if (!isLoginDataValid) {
+        if (!isDataValid) {
           setState(() {
-            isLoginDataValid = true;
+            isDataValid = true;
           });
         }
       } else {
-        if (isLoginDataValid) {
+        if (isDataValid) {
           setState(() {
-            isLoginDataValid = false;
+            isDataValid = false;
           });
         }
       }
@@ -104,15 +104,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
     passwordTextEditingController.addListener(() {
       if (formKey.currentState!.validate()) {
-        if (!isLoginDataValid) {
+        if (!isDataValid) {
           setState(() {
-            isLoginDataValid = true;
+            isDataValid = true;
           });
         }
       } else {
-        if (isLoginDataValid) {
+        if (isDataValid) {
           setState(() {
-            isLoginDataValid = false;
+            isDataValid = false;
           });
         }
       }
@@ -196,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     onEditingComplete: () {
-                      // TODO: Login
+                      // TODO:
                     },
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.visiblePassword,
@@ -235,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const Gap(16),
                   WButton(
-                    isDisabled: !isLoginDataValid,
+                    isDisabled: !isDataValid,
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         Navigator.push(
@@ -272,42 +272,39 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.facebook),
+                      SocialMediaLoginButton(onTap: () {}, icon: AppIcons.facebook),
                       const Gap(32),
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.google),
+                      SocialMediaLoginButton(onTap: () {}, icon: AppIcons.google),
                       const Gap(32),
-                      SocialMediaLoginButton(
-                          onTap: () {}, icon: AppIcons.apple),
+                      SocialMediaLoginButton(onTap: () {}, icon: AppIcons.apple),
                     ],
                   ),
-                  Gap(54),
-                               Padding(
-                      padding: const EdgeInsets.only(top: 33.0, bottom: 39),
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Don’t have an account ? ",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SignUpScreen()));
-                                },
-                                child: Text("Sign up",
-                              style: TextStyle(color: cursorColor),
-                                )),
-                          ],
-                        ),
+                  Gap(110),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 33.0, bottom: 39),
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don’t have an account ? ",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpScreen()));
+                              },
+                              child: Text(
+                                "Sign up",
+                                style: TextStyle(color: cursorColor),
+                              )),
+                        ],
                       ),
                     ),
+                  ),
                 ],
               ),
             ),

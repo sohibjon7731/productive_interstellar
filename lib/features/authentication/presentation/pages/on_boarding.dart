@@ -35,14 +35,54 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             ],
           ),
           onLastPage
-              ? Container(
-                  padding: EdgeInsets.only(bottom: 42),
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Stack(
+              ? Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(bottom: 42),
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: wButtonColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              Container(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _controller.jumpToPage(0);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: SvgPicture.asset(AppIcons.back),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Gap(101),
+                        SmoothPageIndicator(
+                          effect: ExpandingDotsEffect(
+                            activeDotColor: cursorColor,
+                            dotColor: cursorColor.withOpacity(0.32),
+                            spacing: 4,
+                            dotWidth: 8,
+                            dotHeight: 8,
+                            radius: 12,
+                            strokeWidth: 24,
+                          ),
+                          controller: _controller,
+                          count: 2,
+                        ),
+                        Gap(102),
+                        Stack(
                           children: [
                             Container(
                               width: 44,
@@ -55,64 +95,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             Container(
                               child: GestureDetector(
                                 onTap: () {
-                                  _controller.jumpToPage(0);
+                                  _controller.nextPage(
+                                      duration: Duration(milliseconds: 100),
+                                      curve: Curves.linear);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginScreen(),
+                                    ),
+                                  );
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
-                                  child: SvgPicture.asset(AppIcons.back),
+                                  child: SvgPicture.asset(AppIcons.next),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      Gap(101),
-                      SmoothPageIndicator(
-                        effect: ExpandingDotsEffect(
-                          activeDotColor: cursorColor,
-                          dotColor: cursorColor.withOpacity(0.32),
-                          spacing: 4,
-                          dotWidth: 8,
-                          dotHeight: 8,
-                          radius: 12,
-                          strokeWidth: 24,
-                        ),
-                        controller: _controller,
-                        count: 2,
-                      ),
-                      Gap(102),
-                      Stack(
-                        children: [
-                          Container(
-                            width: 44,
-                            height: 44,
-                            decoration: BoxDecoration(
-                              color: wButtonColor,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              onTap: () {
-                                _controller.nextPage(
-                                    duration: Duration(milliseconds: 100),
-                                    curve: Curves.linear);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: SvgPicture.asset(AppIcons.next),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 )
               : Container(
@@ -120,7 +122,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   alignment: Alignment.bottomCenter,
                   child: Row(
                     children: [
-                      Gap(169),
+                      Gap(169 + 24),
                       SmoothPageIndicator(
                         effect: ExpandingDotsEffect(
                           activeDotColor: cursorColor,
@@ -134,7 +136,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         controller: _controller,
                         count: 2,
                       ),
-                      Gap(102),
+                      Gap(108),
                       Stack(
                         children: [
                           Container(
@@ -172,28 +174,34 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 69),
-          child: Row(
-            children: [
-              Gap(310),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+          padding: const EdgeInsets.only(top: 60),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "SKIP",
+                      style: TextStyle(
+                        color: textButtonColor,
+                        fontSize: 20,
+                      ),
                     ),
-                  );
-                },
-                child: Text(
-                  "SKIP",
-                  style: TextStyle(
-                    color: textButtonColor,
-                    fontSize: 20,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Padding(
@@ -238,28 +246,32 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 69),
-          child: Row(
-            children: [
-              Gap(310),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+          padding: const EdgeInsets.only(top: 60),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Gap(310),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "SKIP",
+                    style: TextStyle(
+                      color: textButtonColor,
+                      fontSize: 20,
                     ),
-                  );
-                },
-                child: Text(
-                  "SKIP",
-                  style: TextStyle(
-                    color: textButtonColor,
-                    fontSize: 20,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Padding(
